@@ -1,5 +1,0 @@
-I have the main functionality of the program working but I just need to get it to look pretty and add some more funtionality
-I could try running a server (Heroku?) and hosting it there and call it from a local client
-- Im going to make it a wole screen where you can search and will just show it on the GUI
-- Im gonna have it default to current lcoation because that would be the most helpful thing and they can add locations from a search
- - Choose to just search a location or add it to their monitor list and it will display the weather in all locations on the list
