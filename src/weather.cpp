@@ -21,7 +21,7 @@ static size_t WriteMemoryCallback(void* contents, size_t size, size_t nmemb, voi
 
 void getWeather(std::string location){
   std::cout << "---------- Weather Monitor ----------\n\n";
-  std::string APIKey = "3e55a2a5889bed168093214562f5f65b";
+  std::string APIKey;
   std::string latitude = "40.153362";
   std::string longitude = "-76.604256";
 
