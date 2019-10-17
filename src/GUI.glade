@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.22.1 -->
+<interface>
+  <requires lib="gtk+" version="3.20"/>
+  <object class="GtkApplicationWindow" id="TopLevel">
+    <property name="can_focus">False</property>
+    <property name="default_width">640</property>
+    <property name="default_height">480</property>
+    <child>
+      <placeholder/>
+    </child>
+    <child>
+      <object class="GtkFixed" id="layout_fixed">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <child>
+          <object class="GtkEntry" id="entry_location">
+            <property name="width_request">306</property>
+            <property name="height_request">34</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="placeholder_text" translatable="yes">Location</property>
+            <signal name="button-press-event" handler="on_entry_location_button_press_event" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">20</property>
+            <property name="y">45</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="label_location">
+            <property name="width_request">100</property>
+            <property name="height_request">30</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">Location: </property>
+            <attributes>
+              <attribute name="foreground" value="#ffffffffffff"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="x">6</property>
+            <property name="y">4</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="button_search_location">
+            <property name="label" translatable="yes">Search</property>
+            <property name="width_request">116</property>
+            <property name="height_request">34</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <signal name="activate" handler="on_button_search_location_activate" swapped="no"/>
+            <signal name="clicked" handler="on_button_search_location_clicked" swapped="no"/>
+          </object>
+          <packing>
+            <property name="x">20</property>
+            <property name="y">90</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="label_locationName">
+            <property name="width_request">352</property>
+            <property name="height_request">42</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <attributes>
+              <attribute name="foreground" value="#ffffffffffff"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="y">165</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSeparator" id="pageBreak">
+            <property name="width_request">20</property>
+            <property name="height_request">640</property>
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="double_buffered">False</property>
+            <property name="orientation">vertical</property>
+          </object>
+          <packing>
+            <property name="x">353</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkScrolledWindow" id="locationList">
+            <property name="width_request">228</property>
+            <property name="height_request">640</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="shadow_type">in</property>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="x">390</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
