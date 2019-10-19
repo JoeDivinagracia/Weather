@@ -28,4 +28,17 @@ class MemoryChunk{
   char* getMemory(){ return memory; }
 };
 
+class Weather{
+ private:
+  std::string description;
+  double temperature;
+  
+ public:
+  void setDescription(std::string description){ this->description = description; }
+  void setTemp(double temperature){ this->temperature = temperature;}
+  
+  std::string getDescription(){return description;}
+  double getTemperature(){return temperature;}
+};
+
 #endif
