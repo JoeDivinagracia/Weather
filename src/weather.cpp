@@ -2,6 +2,9 @@
 #include <curl/curl.h>
 #include <string.h>
 #include "includes/weather.h"
+#include "includes/json.hpp"
+
+using json = nlohmann::json;
 
 static size_t WriteMemoryCallback(void* contents, size_t size, size_t nmemb, void* userp){
   size_t realsize = size*nmemb;
@@ -21,7 +24,7 @@ static size_t WriteMemoryCallback(void* contents, size_t size, size_t nmemb, voi
 
 void getWeather(std::string location){
   std::cout << "---------- Weather Monitor ----------\n\n";
-  std::string APIKey;
+  std::string APIKey = "3e55a2a5889bed168093214562f5f65b";
   std::string latitude = "40.153362";
   std::string longitude = "-76.604256";
 
@@ -48,7 +51,6 @@ void currentWeather(std::string URL){
   }
   else{
     parseJSON(chunk.getMemory());
-    printf("%lu bytes retrieved\n", (unsigned long)chunk.getSize());
   }
   curl_easy_cleanup(curl);
   free(chunk.getMemory());
@@ -73,13 +75,16 @@ void forecastWeather(std::string URL){
   }
   else{
     parseJSON(chunk.getMemory());
-    printf("%lu bytes retrieved\n", (unsigned long)chunk.getSize());
   }
   curl_easy_cleanup(curl);
   free(chunk.getMemory());
 }
 
+double KtoF(double kelvin){return (((kelvin - 273.15)*9)/5)+32;}
+
 void parseJSON(char* chunkMemory){
-  //TODO: parse the json data, either from a file or figure out how to do it in-place or whatever
-  std::cout << chunkMemory << std::endl;
+  Weather* weather;
+  auto jsonData = json::parse(chunkMemory);
+  weather->setDescription(jsonData["weather"][0]["description"]);
+  weather->setTemp(KtoF(jsonData["main"]["temp"]));
 }
