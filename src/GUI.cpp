@@ -7,12 +7,12 @@ Gtk::ApplicationWindow* pApplication = nullptr;
 
 void getEntryText(Gtk::Entry* copy, Gtk::Label* locationLabel){
   Glib::ustring loc = "\""+copy->get_text()+"\"";
-  getWeather(loc);
+  getWeather(copy->get_text());
   locationLabel->set_text(loc);
 }
 
 int main(int argc, char** argv){
-  auto app = Gtk::Application::create(argc, argv, "org.gtk.example");
+  auto app = Gtk::Application::create(argc, argv, "Weather Application");
   auto refBuilder = Gtk::Builder::create();
   try{
     refBuilder->add_from_file("GUI.glade");
