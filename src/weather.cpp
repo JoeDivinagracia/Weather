@@ -5,6 +5,7 @@
 #include "includes/json.hpp"
 
 using json = nlohmann::json;
+double KtoF(double kelvin){return (((kelvin - 273.15)*9)/5)+32;}
 
 static size_t WriteMemoryCallback(void* contents, size_t size, size_t nmemb, void* userp){
   size_t realsize = size*nmemb;
@@ -23,17 +24,15 @@ static size_t WriteMemoryCallback(void* contents, size_t size, size_t nmemb, voi
 }
 
 void getWeather(std::string location){
-  std::cout << "---------- Weather Monitor ----------\n\n";
-  std::string APIKey = "3e55a2a5889bed168093214562f5f65b";
-  std::string latitude = "40.153362";
-  std::string longitude = "-76.604256";
+  std::string APIKey;
 
-  currentWeather("http://api.openweathermap.org/data/2.5/weather?appid="+APIKey+"&lat="+latitude+"&lon="+longitude);
-  //getCooridinates();
+  CurrentWeather current = currentWeather("http://api.openweathermap.org/data/2.5/weather?appid="+APIKey+"&q="+location);
+  std::cout << current.getTemperature() << std::endl;
+  //ForecastWeather forecast = getCooridinates("http://api.openweathermap.org/data/2.5/forecast?appid="+APIKey+"&lat="+latitude+"&lon="+longitude);
   std::cout << "\nHave an absolutely Clawtacularly Clawsome day valued Blue Claws customer!\n";
 }
 
-void currentWeather(std::string URL){
+CurrentWeather currentWeather(std::string URL){
   CURL* curl;
   CURLcode result;
   MemoryChunk chunk;
@@ -50,13 +49,18 @@ void currentWeather(std::string URL){
     fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(result));
   }
   else{
-    parseJSON(chunk.getMemory());
+    CurrentWeather weather;
+    auto jsonData = json::parse(chunk.getMemory());
+    weather.setDescription(jsonData["weather"][0]["description"]);
+    weather.setTemp(KtoF(jsonData["main"]["temp"]));
+    weather.setWindSpeed(jsonData["wind"]["speed"]);
+    return weather;
   }
   curl_easy_cleanup(curl);
   free(chunk.getMemory());
 }
 
-void forecastWeather(std::string URL){
+ForecastWeather forecastWeather(std::string URL){
   CURL* curl;
   CURLcode result;
   MemoryChunk chunk;
@@ -74,17 +78,13 @@ void forecastWeather(std::string URL){
     fprintf(stderr, "curl_easy_perform() failed: %s\n", curl_easy_strerror(result));
   }
   else{
-    parseJSON(chunk.getMemory());
+    ForecastWeather forecast;
+    auto jsonData = json::parse(chunk.getMemory());
+    //forecast.setDescription(jsonData["weather"][0]["description"]);
+    //forecast.setTemp(KtoF(jsonData["main"]["temp"]));
+    //forecast.setWindSpeed(jsonData["wind"]["speed"]);
+    return forecast;
   }
   curl_easy_cleanup(curl);
   free(chunk.getMemory());
-}
-
-double KtoF(double kelvin){return (((kelvin - 273.15)*9)/5)+32;}
-
-void parseJSON(char* chunkMemory){
-  Weather* weather;
-  auto jsonData = json::parse(chunkMemory);
-  weather->setDescription(jsonData["weather"][0]["description"]);
-  weather->setTemp(KtoF(jsonData["main"]["temp"]));
 }
